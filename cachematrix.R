@@ -1,36 +1,37 @@
-## Put comments here that give an overall description of what your
-## functions do
+## These functions together retrieve the inverse of a "matrix" list created and stored by the first function
+## But first, the second function checks to see if an inverse had already been calculated and stored. If so,
+## it retrieves the inverse. If not, it calculates the inverse of the matrix fed into the function.
 
-## Write a short comment describing this function
+## This function creates a "matrix", which is really a list that caches the inverse of the matrix.
+## It sets the value of the matrix, gets the value of the matrix, sets the value of the inverse, and 
+## gets the value of the inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
-           m <- NULL
+        inv <- NULL
         set <- function(y) {
                 x <<- y
-                m <<- NULL
+                inv <<- NULL
         }
         get <- function() x
-        setmean <- function(mean) m <<- mean
-        getmean <- function() m
+        setinverse <- function(inverse) inv <<- inverse
+        getinverse <- function() inv
         list(set = set, get = get,
-             setmean = setmean,
-             getmean = getmean)
-
+             setinverse = setinverse,
+             getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## This function retrieves the inverse of a matrix from the previous function. However, if no inverse has been 
+## cached, it calculates the inverse.
 
 cacheSolve <- function(x, ...) {
-        
-        ## Return a matrix that is the inverse of 'x'
-        m <- x$getmean()
-        if(!is.null(m)) {
+        m <- x$getinverse()
+        if(!is.null(inv)) {
                 message("getting cached data")
-                return(m)
+                return(inv)
         }
-        data <- x$get()
-        m <- mean(data, ...)
-        x$setmean(m)
-        m
+        mat <- x$get()
+        inv <- solve(mat, ...)
+        x$setinverse(inv)
+        inv
 }
